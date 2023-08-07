@@ -88,27 +88,31 @@ index 8c28a36..378c219 100755
  #include <linux/module.h>
  #include <linux/moduleparam.h>
  //#include <mach/iomux.h>
++#ifdef CONFIG_ARCH_LF1000
 +#include <mach/gpio.h>
 +#include <mach/gpio_map.h>
-+
-+
++#endif
  
  /* reset GPIO parameter defaults to GPIO 0 (ID_SD) on the Raspberry Pi */
  static int esp_reset_gpio = 0;
-@@ -38,8 +42,16 @@ void sif_platform_reset_target(void)
+@@ -38,8 +42,20 @@ void sif_platform_reset_target(void)
  	printk("ESP8089 reset via GPIO %d\n", esp_reset_gpio);
  	gpio_request(esp_reset_gpio,"esp_reset");
  	gpio_direction_output(esp_reset_gpio,0);
++#ifdef CONFIG_ARCH_LF1000
 +	gpio_configure_pin(
 +		lf1000_l2p_port(DIDJ_CARTRIDGE_DETECT_PORT),
 +		lf1000_l2p_pin(DIDJ_CARTRIDGE_DETECT_PIN),
 +		GPIO_GPIOFN, 1, 0, 0);
++#endif
  	msleep(200);
  	gpio_direction_input(esp_reset_gpio);
++#ifdef CONFIG_ARCH_LF1000
 +	gpio_configure_pin(
 +		lf1000_l2p_port(DIDJ_CARTRIDGE_DETECT_PORT),
 +		lf1000_l2p_pin(DIDJ_CARTRIDGE_DETECT_PIN),
 +		GPIO_GPIOFN, 0, 1, 0);
++#endif
  	gpio_free(esp_reset_gpio);
  }
  
