@@ -1,7 +1,7 @@
 input_axis_threshold = "0.500000"
 load_dummy_on_core_shutdown = "true"
 fps_show = "false"
-libretro_directory = "~/usr/lib/libretro"
+libretro_directory = "/usr/lib/libretro"
 rewind_enable = "false"
 audio_latency = "64"
 audio_sync = "true"
