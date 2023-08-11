@@ -1,12 +1,17 @@
 #!/bin/sh
-BULK_PART=`awk -e '$4 ~ /"Bulk"/ {print "/dev/" substr($1, 1, length($1)-1)}' /proc/mtd`
+BULK_PART="/dev/mmcblk0p4"
 MOUNT_POINT=/roms
 
 case "$1" in
 	start)
 
 		if grep $MOUNT_POINT /proc/mounts > /dev/null; then
-			echo "Data already mounted."
+			echo "Data already mounted. Is this an MTD-based system with an SD card attached?"
+			exit 0;
+		fi
+
+		if [ ! -f "$BULK_PART"; then
+			echo "Bulk NAND partition not found. Probably an MMC system."
 			exit 0;
 		fi
 
@@ -17,13 +22,7 @@ case "$1" in
 
 		echo "Mounting Data partition."
 
-		ubiattach /dev/ubi_ctrl -p $BULK_PART
-		if [ $? != 0 ]; then
-			echo "Attaching Data UBI failed."
-			exit 1
-		fi
-
-		mount -t ubifs -o rw ubi1_0 $MOUNT_POINT
+		mount -t ext4 -o rw $BULK_PART $MOUNT_POINT
 		if [ $? != 0 ]; then
 			echo "Mounting Data failed."
 			exit 1
@@ -39,15 +38,6 @@ case "$1" in
 				echo "Unmounting Data failed."
 				exit 1
 			fi
-
-			if [ -e /sys/class/ubi/ubi1 ]; then
-				ubidetach /dev/ubi_ctrl -d 1
-			fi
-			if [ $? != 0 ]; then
-				echo "Detaching Data UBI failed."
-				exit 1
-			fi
-
 		else
 			echo "Data not mounted."
 		fi
