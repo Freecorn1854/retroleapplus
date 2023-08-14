@@ -1,0 +1,20 @@
+All:
+-Working didj-fi
+-Working wpa_supplicant bringup
+-Overlays for leappads
+-Touch support for gmenunx?
+
+Lf3000:
+  -Generic Kernel
+  -Arcadyan wifi
+  -dhd wifi
+  -USB OTG
+  -Surgeon bootsplash
+
+LF2000:
+  -USB OTG
+  -Surgeon bootsplash
+
+LF1000:
+  -Finish Leappad1 support
+  -USB adapter board
