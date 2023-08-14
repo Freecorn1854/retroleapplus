@@ -9,5 +9,7 @@ if [[ -f /sys/devices/platform/lf2000-power/shutdown ]]; then
         # If we trigger poweroff, we're done.
         exit
       fi
+      # Only check every second or so to avoid unnecessary system load.
+      sleep 1
     done
 fi
