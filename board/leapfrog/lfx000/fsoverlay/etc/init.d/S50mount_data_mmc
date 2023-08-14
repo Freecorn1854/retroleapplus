@@ -10,7 +10,7 @@ case "$1" in
 			exit 0;
 		fi
 
-		if [ ! -f "$BULK_PART"; then
+		if [ ! -f "$BULK_PART" ]; then
 			echo "Bulk NAND partition not found. Probably an MMC system."
 			exit 0;
 		fi
