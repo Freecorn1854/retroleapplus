@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # LF1000 doesn't have this file and uses kernel-side power management.
 if [[ -f /sys/devices/platform/lf2000-power/shutdown ]]; then
     while `true`
