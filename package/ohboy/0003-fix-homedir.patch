@@ -1,0 +1,26 @@
+diff -Naur a/main.c b/main.c
+--- a/main.c	2023-08-20 18:20:05.168573077 -0600
++++ b/main.c	2023-08-20 18:16:03.999854689 -0600
+@@ -2379,7 +2380,7 @@
+ 	rc_command(svdir);
+ 	free (svdir);
+ #else	
+-	rc_command("set savedir saves");
++	rc_command("set savedir /roms/saves");
+ #endif /* DINGOO_OPENDINGUX */
+ #endif /* DINGOO_SIM */
+ 	rc_command("set stereo true");
+@@ -2504,9 +2505,9 @@
+ 	rc_sourcefile(bindingsrc);
+ 	free (bindingsrc);
+ #else
+-	rc_sourcefile("ohboy.rc");
+-	rc_sourcefile("video.rc");
+-	rc_sourcefile("bindings.rc");
++	rc_sourcefile("/configs/.ohboy/ohboy.rc");
++	rc_sourcefile("/configs/.ohboy/video.rc");
++	rc_sourcefile("/configs/.ohboy/bindings.rc");
+ 	mkdir("saves", 0777); /* FIXME lookup "savedir" rc variable and mkdir that instead? */
+ 	mkdir("palettes", 0777);
+ 	mkdir("borders", 0777);
+
